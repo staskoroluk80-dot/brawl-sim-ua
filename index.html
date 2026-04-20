@@ -213,6 +213,7 @@
   
   #shop-btn{bottom:420px;}
   #characters-btn{bottom:350px;}
+  #brawl-pass-menu-btn{bottom:280px;}
   
   /* Brawl Pass button */
   .brawl-pass-btn{
@@ -1728,6 +1729,7 @@
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     background: linear-gradient(45deg, #ffd700, #ff9900);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -2020,6 +2022,7 @@
       <img src="Img/button.png" alt="Магазин">
     </button>
     <button class="menu-btn" id="characters-btn">Персонажі</button>
+    <button class="menu-btn" id="brawl-pass-menu-btn">Brawl Pass</button>
   </div>
   
   <!-- Characters scene -->
@@ -4427,6 +4430,9 @@
     document.getElementById('menu-scene').style.display = 'none';
     document.getElementById('shop-scene').style.display = 'block';
     generateShopGrid();
+  });
+  document.getElementById('brawl-pass-menu-btn').addEventListener('click', () => {
+    openBrawlPass();
   });
   document.getElementById('back-btn').addEventListener('click', () => {
     document.getElementById('characters-scene').style.display = 'none';
