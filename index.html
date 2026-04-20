@@ -1,4 +1,4 @@
-оверни <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="utf-8" />
@@ -2333,6 +2333,7 @@
   let backgroundMusic = null;
   let lastDailyGiftClaimTime = 0;
   let dailyGiftAvailable = false;
+  let chestOpening = false;
   
   let holidayOfferEndTime = Date.now() + (7 * 24 * 60 * 60 * 1000);
   let holidayOfferPurchased = false;
@@ -3283,6 +3284,9 @@
   }
 
   function openChest() {
+    if (chestOpening) return;
+    chestOpening = true;
+
     const availableRewardIndex = getAvailableRewardIndex();
     const isHolidayChest = document.querySelector('.chest-title').textContent.includes("БРАВЛІДЕЙС");
     
@@ -3298,7 +3302,6 @@
       
       document.querySelector('.reward-title').textContent = "🎄 ВІТАЄМО ЗІ СВЯТОМ! 🎄";
       document.querySelector('.reward-title').style.color = "#ff0000";
-      
     } else if (availableRewardIndex !== -1 && coinsCollected >= 10) {
       dailyRewardsClaimed[availableRewardIndex] = true;
       lastRewardTime = Date.now();
@@ -3326,6 +3329,8 @@
       document.getElementById('reward-desc').textContent = `Ви зібрали ${coinsCollected} монет і отримали ${coinsEarned} монет!`;
       saveGameData();
     }
+
+    setTimeout(() => { chestOpening = false; }, 100);
   }
 
   function updateTrophies(trophyChange) {
@@ -4310,6 +4315,15 @@
   }
 
   // ==================== СИСТЕМА ЗАГАЛЬНОГО ТАЙМЕРА ====================
+  function saveDailyRewards() {
+    saveGameData();
+    updateGlobalTimer();
+  }
+
+  function loadDailyRewards() {
+    updateGlobalTimer();
+  }
+
   function updateGlobalTimer() {
     const allRewardsClaimed = dailyRewardsClaimed.every(claimed => claimed);
     const timerContainer = document.getElementById('global-timer-container');
